@@ -5,6 +5,7 @@ import { Response } from 'express';
 import { SignInUserByEmailDto } from './dto/signInUserByEmail.dto';
 import { LogoutDto } from './dto/logout.dto';
 import { CheckEmailDto } from './dto/checkEmail.dto';
+import { DeleteAccountDto } from './dto/deleteAccount.dto';
 
 @Controller('users')
 export class UsersController {
@@ -59,7 +60,7 @@ export class UsersController {
   async logout(@Body() logout: LogoutDto, @Res() res: Response) {
     const { email } = logout;
     const logoutResult = await this.usersService.logout(email);
-    res.cookie('refreshToken', {
+    res.clearCookie('refreshToken', {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
@@ -75,5 +76,15 @@ export class UsersController {
     return res.json({
       message: checkEmailResult.message,
     });
+  }
+  @Post('/deleteAccount')
+  async deleteAccount(
+    @Body() deleteAccountDto: DeleteAccountDto,
+    @Res() res: Response,
+  ) {
+    const { email, password } = deleteAccountDto;
+    const result = await this.usersService.deleteAccount(email, password);
+    res.clearCookie('refreshToken');
+    return res.json(result);
   }
 }

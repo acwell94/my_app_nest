@@ -94,4 +94,28 @@ export class UsersService {
       throw new BadRequestException('알 수 없는 에러가 발생하였습니다.');
     }
   }
+  async deleteAccount(email: string, password: string) {
+    try {
+      const user = await this.userRepo.findOneBy({ email });
+      if (!user) {
+        throw new BadRequestException('존재하지 않는 계정입니다.');
+      }
+
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      if (!isValidPassword) {
+        throw new BadRequestException('비밀번호가 일치하지 않습니다.');
+      }
+
+      await this.userRepo.delete(user.userId);
+
+      return {
+        message: '회원탈퇴가 완료되었습니다.',
+      };
+    } catch (err) {
+      if (err instanceof BadRequestException) {
+        throw err;
+      }
+      throw new BadRequestException('회원탈퇴 처리 중 오류가 발생했습니다.');
+    }
+  }
 }
