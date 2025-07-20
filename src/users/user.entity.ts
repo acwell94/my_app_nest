@@ -20,10 +20,10 @@ export class User {
   @Column({ type: 'varchar', length: 40, unique: true })
   email: string;
 
-  @CreateDateColumn({ type: 'timestamp', precision: 6 })
+  @CreateDateColumn()
   createdDate: Date;
 
-  @UpdateDateColumn({ type: 'timestamp', precision: 6 })
+  @UpdateDateColumn()
   updatedDate: Date;
 
   @Column({ type: 'int', nullable: true })

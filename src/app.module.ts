@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
+import { PerfumeModule } from './perfume/perfume.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AdminModule } from './admin/admin.module';
       synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
     }),
     AdminModule,
+    PerfumeModule,
   ],
   controllers: [],
   providers: [],

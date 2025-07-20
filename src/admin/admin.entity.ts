@@ -17,10 +17,10 @@ export class Admin {
   @Column({ type: 'varchar', length: 20, unique: true })
   email: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn()
   createdDate: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn()
   updatedDate: Date;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
